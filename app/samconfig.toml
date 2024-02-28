@@ -1,0 +1,11 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "fidamy-case"
+resolve_s3 = true
+s3_prefix = "fidamy-case"
+region = "eu-central-1"
+profile = "kit"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "apiGatewayName=\"pricing-api\" apiGatewayStageName=\"dev\" apiGatewayHTTPMethod=\"GET\" lambdaFunctionName=\"pricing-function\""
+image_repositories = []

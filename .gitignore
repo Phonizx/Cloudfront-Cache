@@ -1,0 +1,21 @@
+# Dependency directories
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build output
+dist/
+
+# Environment variables
+.env
+
+# IDE files
+.vscode/
+.idea/
+
+# macOS metadata
+.DS_Store
+
+# npm/yarn lock files
+package-lock.json
+yarn.lock

@@ -1,0 +1,153 @@
+Transform: AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    Architectures:
+    - arm64
+    Runtime: nodejs16.x
+    CodeUri: .
+    Timeout: 150
+    MemorySize: 1024
+    Tracing: Active
+Resources:
+  MyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      DefinitionBody:
+        swagger: '2.0'
+        info:
+          title: Pricing API
+        paths:
+          /pricings:
+            post:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${createPricing.Arn}/invocations
+                httpMethod: POST
+                type: aws_proxy
+  getPricing:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - functions/pricing/getPricingByClaim.ts
+        Minify: true
+        Sourcemap: true
+        UseNpmCi: true
+      SamResourceId: getPricing
+    Properties:
+      Handler: getPricingByClaim.handleEvent
+      Description: A simple example includes a HTTP get method to get all items from
+        a DynamoDB table.
+      Policies:
+      - DynamoDBReadPolicy:
+          TableName:
+            Ref: SampleTable
+      Tracing: Active
+      Environment:
+        Variables:
+          NODE_OPTIONS: --enable-source-maps
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+          SAMPLE_TABLE:
+            Ref: SampleTable
+          POWERTOOLS_SERVICE_NAME: items-store
+          POWERTOOLS_METRICS_NAMESPACE: PowertoolsSAMExample
+          POWERTOOLS_LOG_LEVEL: debug
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /pricings
+            Method: GET
+      CodeUri: getPricing
+  createPricing:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - functions/pricing/createPricing.ts
+        Minify: true
+        Sourcemap: true
+        UseNpmCi: true
+      SamResourceId: createPricing
+    Properties:
+      Handler: createPricing.handleEvent
+      Role:
+        Fn::GetAtt:
+        - CreatePricingRole
+        - Arn
+      Description: A simple example includes a HTTP get method to get all items from
+        a DynamoDB table.
+      Policies:
+      - DynamoDBReadPolicy:
+          TableName:
+            Ref: SampleTable
+      Tracing: Active
+      Environment:
+        Variables:
+          NODE_OPTIONS: --enable-source-maps
+          AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+          SAMPLE_TABLE:
+            Ref: SampleTable
+          POWERTOOLS_SERVICE_NAME: items-store
+          POWERTOOLS_METRICS_NAMESPACE: PowertoolsSAMExample
+          POWERTOOLS_LOG_LEVEL: debug
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /pricings
+            Method: POST
+      CodeUri: createPricing
+  SampleTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    Properties:
+      TableName: Pricing
+      AttributeDefinitions:
+      - AttributeName: pricing_id
+        AttributeType: S
+      - AttributeName: claim_id
+        AttributeType: S
+      - AttributeName: timestamp
+        AttributeType: S
+      KeySchema:
+      - AttributeName: pricing_id
+        KeyType: HASH
+      GlobalSecondaryIndexes:
+      - IndexName: ClaimIdTimestampIndex
+        KeySchema:
+        - AttributeName: claim_id
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+      ProvisionedThroughput:
+        ReadCapacityUnits: 0
+        WriteCapacityUnits: 0
+  CreatePricingRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName: DynamoDBPutPolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - dynamodb:PutItem
+            Resource:
+              Fn::GetAtt:
+              - SampleTable
+              - Arn
