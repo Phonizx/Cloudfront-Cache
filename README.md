@@ -1,8 +1,9 @@
 # Problem 
 
 
-# Solution
+# Solution Demo
 
+![](./docs/videos/demo.mov)
 
 ## Basic Architecture
 
@@ -42,19 +43,4 @@ sequenceDiagram
 
 
 
-{
-    "compilerOptions": {
-      "target": "es2020",
-      "strict": true,
-      "preserveConstEnums": true,
-      "noEmit": true,
-      "sourceMap": false,
-      "module":"commonjs",
-      "moduleResolution":"node",
-      "esModuleInterop": true, 
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true, 
-      "isolatedModules": true
-    },
-    "exclude": ["node_modules", "**/*.test.ts"]
-  }%                 
+              
