@@ -3,7 +3,8 @@
 
 # Solution Demo
 
-![](./docs/videos/demo.mov)
+<video src="/docs/videos/demo.mov" controls="controls" style="max-width: 730px;">
+</video>
 
 ## Basic Architecture
 
