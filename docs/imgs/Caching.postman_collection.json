@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "4867c18f-557e-4530-87a5-1ae82122dc59",
+		"name": "Caching",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32275530"
+	},
+	"item": [
+		{
+			"name": "Local",
+			"item": [
+				{
+					"name": "Local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/pricings?claim_id=claim_123",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"pricings"
+							],
+							"query": [
+								{
+									"key": "claim_id",
+									"value": "claim_123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Local Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"claim_id\": \"post_123\",\n    \"price\": 1000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/pricings",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"pricings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Prod",
+			"item": [
+				{
+					"name": "GET pricing",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://wfthdz3auf.execute-api.eu-central-1.amazonaws.com/Prod/pricings?claim_id=post_123",
+							"protocol": "https",
+							"host": [
+								"wfthdz3auf",
+								"execute-api",
+								"eu-central-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"pricings"
+							],
+							"query": [
+								{
+									"key": "claim_id",
+									"value": "post_123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET pricing",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://wfthdz3auf.execute-api.eu-central-1.amazonaws.com/Prod/pricings?claim_id=post_123",
+									"protocol": "https",
+									"host": [
+										"wfthdz3auf",
+										"execute-api",
+										"eu-central-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"Prod",
+										"pricings"
+									],
+									"query": [
+										{
+											"key": "claim_id",
+											"value": "post_123"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "133"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 28 Feb 2024 11:37:23 GMT"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "faa75268-d868-43f4-9902-21eb8727af4d"
+								},
+								{
+									"key": "x-amz-apigw-id",
+									"value": "T2EmKHj9FiAEIXA="
+								},
+								{
+									"key": "Cache-Control",
+									"value": "public, max-age=100"
+								},
+								{
+									"key": "ETag",
+									"value": "1709119906808"
+								},
+								{
+									"key": "X-Amzn-Trace-Id",
+									"value": "Root=1-65df1af3-6364e0045d38e0f13d01b393;Sampled=1;lineage=7badcc33:0"
+								},
+								{
+									"key": "X-Cache",
+									"value": "Miss from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 bb1fd0922e473ba97ff6a00f6c71141a.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "AMS54-C1"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "boS5FIfwpr0g6FhYfqND8n32ADWpvzSSvlXuaC-7GHLsCB2BL5cklQ=="
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"currency\": \"EUR\",\n    \"pricing_id\": \"a9422a36-2455-4cdd-b54f-16df2550004f\",\n    \"price\": 2100,\n    \"claim_id\": \"post_123\",\n    \"timestamp\": \"1709119906808\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create pricing",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currency\": \"Eur\",\n    \"price\": 3000,\n    \"claim_id\": \"post_123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://wfthdz3auf.execute-api.eu-central-1.amazonaws.com/Prod/pricings",
+							"protocol": "https",
+							"host": [
+								"wfthdz3auf",
+								"execute-api",
+								"eu-central-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"pricings"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create pricing Bad request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"currency\": \"Eur\",\n    \"price\": 3000,\n    \"claim_id\": \"post_123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://wfthdz3auf.execute-api.eu-central-1.amazonaws.com/Prod/pricings",
+									"protocol": "https",
+									"host": [
+										"wfthdz3auf",
+										"execute-api",
+										"eu-central-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"Prod",
+										"pricings"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 28 Feb 2024 11:37:42 GMT"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "fc9875b1-dba2-4d8f-b4ba-e1f58b5cde9a"
+								},
+								{
+									"key": "x-amz-apigw-id",
+									"value": "T2EosHS8FiAEHWw="
+								},
+								{
+									"key": "X-Amzn-Trace-Id",
+									"value": "Root=1-65df1b04-44c5477c1118b4de683b154c;Sampled=1;lineage=f3f048ff:0"
+								},
+								{
+									"key": "X-Cache",
+									"value": "Error from cloudfront"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 bb1fd0922e473ba97ff6a00f6c71141a.cloudfront.net (CloudFront)"
+								},
+								{
+									"key": "X-Amz-Cf-Pop",
+									"value": "AMS54-C1"
+								},
+								{
+									"key": "X-Amz-Cf-Id",
+									"value": "z6GdF-Lk9Fg2mtK233gCk6pu64VrJRzv8_AHlrKNcpcwLPcPp__lnA=="
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CloudFront",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "dcb98czatssg.cloudfront.net/Prod/pricings?claim_id=post_123",
+					"host": [
+						"dcb98czatssg",
+						"cloudfront",
+						"net"
+					],
+					"path": [
+						"Prod",
+						"pricings"
+					],
+					"query": [
+						{
+							"key": "claim_id",
+							"value": "post_123"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
